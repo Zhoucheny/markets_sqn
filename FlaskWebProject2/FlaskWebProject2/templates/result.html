@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>ETF Research Web Application</title>
+    <link rel="stylesheet" type="text/css" href="Login.css" />
+    <script src="../static/scripts/jQuery-1.11.1.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.2/echarts.min.js"></script>
+</head>
+<body>
+    <div id="main" style="width:900px; height:700px; margin:auto; top:0;left:0; right:0; bottom:0;">  </div>
+    <div id="Return_To_homepage">
+        <form action="/return" method="post">
+            <input type="submit" name="submit_button" value="Rerurn" style="height:60px;width:100px;">
+        </form>
+    </div>
+
+
+
+    <script type="text/javascript">
+         var result = echarts.init(document.getElementById('main'));
+         var option = {
+             tooltip: {
+                 trigger: 'axis',
+                 axisPointer: {
+                     type: 'cross',
+                     label: {
+                         backgroundColor: '#6a7985'
+                     }
+                 }
+             },
+        xAxis: {
+            type: 'category',
+                data: {{ parsed1| tojson}},
+                axisLabel: {
+                        
+                        rotate : 60
+                        
+                        },
+
+             },
+        yAxis: {
+                 type: 'value',
+                     min: function(value) { return value.min; },
+                     max: function(value) { return value.max; },
+
+          
+             },
+        series: [
+                 {
+                     data: {{ parsed3| tojson}},
+                     type: 'line',
+                     markArea: { //标记区域
+                         data: [
+                             [{
+                                 yAxis: '-3',
+                                 name: 'Strong Bear',
+                                 nameLocation: 'end',
+
+                                 itemStyle: {
+                                     color: '#FF6347'
+                                 }
+                             }, {
+                                     yAxis: '-0.7'
+                             }],
+                             [{
+                                 yAxis: '-0.7',
+                                 name: 'Bear',
+                                 nameLocation: 'end',
+                                 itemStyle: {
+                                     color: '#FFC0CB'
+                                 }
+                             }, {
+                                 yAxis: '0'
+                             }],
+                             [{
+                                 yAxis: '0',
+                                 name: 'Neutral',
+                                 nameLocation: 'end',
+                                 itemStyle: {
+                                     color: '#FFFF00'
+                                 }
+                             }, {
+                                 yAxis: '0.7'
+                             }],
+                             [{
+                                 yAxis: '0.7',
+                                 name: 'Bull',
+                                 nameLocation: 'end',
+                                 itemStyle: {
+                                     color: '#90EE90'
+                                 }
+                             }, {
+                                 yAxis: '1.47'
+                             }],
+                             [{
+                                 yAxis: '1.47',
+                                 name: 'Strong Bull',
+                                 nameLocation: 'end',
+                                 itemStyle: {
+                                     color: '#00FA9A'
+                                 }
+                             }, {
+                                 yAxis: '4'
+                             }],
+
+
+
+
+
+                         ]
+                     },
+                 },
+
+             ]
+
+         };
+
+
+
+
+         result.setOption(option);
+    </script>
+
+
+
+</body>
+</html>
